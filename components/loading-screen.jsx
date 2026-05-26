@@ -11,14 +11,7 @@ export default function LoadingScreen() {
   const dividerRef = useRef(null);
   const taglineRef = useRef(null);
   const progressBarRef = useRef(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    // Show only once per session
-    if (sessionStorage.getItem("oria-intro-seen")) return;
-    setVisible(true);
-    sessionStorage.setItem("oria-intro-seen", "1");
-  }, []);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     if (!visible) return;
@@ -162,7 +155,7 @@ export default function LoadingScreen() {
             textTransform: "uppercase",
           }}
         >
-          Marrakech &nbsp;·&nbsp; Crafted in Morocco
+          Handcrafted Leather &nbsp;·&nbsp; Timeless Elegance
         </p>
       </div>
 

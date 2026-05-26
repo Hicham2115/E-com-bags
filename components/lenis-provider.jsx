@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import Lenis from "lenis";import { Fragment as _Fragment, jsx as _jsx } from "react/jsx-runtime";
+import Lenis from "lenis";
 
 export function LenisProvider({ children }) {
   useEffect(() => {
@@ -34,5 +34,5 @@ export function LenisProvider({ children }) {
     };
   }, []);
 
-  return /*#__PURE__*/_jsx(_Fragment, { children: children });
+  return <>{children}</>;
 }

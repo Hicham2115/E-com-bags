@@ -1,31 +1,8 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";import { jsx as _jsx } from "react/jsx-runtime";
+import { createContext, useContext, useState } from "react";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const CartContext = /*#__PURE__*/createContext(null);
+const CartContext = createContext(null);
 
 export function CartProvider({ children }) {
   const [items, setItems] = useState([]);
@@ -47,7 +24,7 @@ export function CartProvider({ children }) {
         price: product.price,
         image: product.images[0] ?? "",
         qty,
-        color: selectedColor
+        color: selectedColor,
       }];
     });
     setOpen(true);
@@ -59,22 +36,22 @@ export function CartProvider({ children }) {
 
   function changeQty(id, delta) {
     setItems((prev) =>
-    prev.map((x) => {
-      if (x.id !== id) return x;
-      const newQty = x.qty + delta;
-      return newQty < 1 ? x : { ...x, qty: newQty };
-    })
+      prev.map((x) => {
+        if (x.id !== id) return x;
+        const newQty = x.qty + delta;
+        return newQty < 1 ? x : { ...x, qty: newQty };
+      })
     );
   }
 
   const count = items.reduce((s, i) => s + i.qty, 0);
   const subtotal = items.reduce((s, i) => s + i.price * i.qty, 0);
 
-  return (/*#__PURE__*/
-    _jsx(CartContext.Provider, { value: { items, open, setOpen, addItem, removeItem, changeQty, count, subtotal }, children:
-      children }
-    ));
-
+  return (
+    <CartContext.Provider value={{ items, open, setOpen, addItem, removeItem, changeQty, count, subtotal }}>
+      {children}
+    </CartContext.Provider>
+  );
 }
 
 export function useCart() {

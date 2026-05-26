@@ -1,7 +1,7 @@
 import { getProducts } from "@/lib/shopify";
-import { ProductsCatalog } from "@/components/products-catalog";import { jsx as _jsx } from "react/jsx-runtime";
+import { ProductsCatalog } from "@/components/products-catalog";
 
 export default async function ProductsPage() {
   const products = await getProducts();
-  return /*#__PURE__*/_jsx(ProductsCatalog, { products: products });
+  return <ProductsCatalog products={products} />;
 }
