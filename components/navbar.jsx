@@ -21,8 +21,8 @@ import {
 const links = [
   { label: "Collections", href: "/products" },
   { label: "New Arrivals", href: "/#collections" },
-  { label: "About", href: "/#ugc" },
-  { label: "Our Story", href: "/#social-proof" },
+  { label: "About", href: "/#about" },
+  { label: "Our Story", href: "/#our-story" },
 ];
 
 export function Navbar() {
@@ -40,7 +40,11 @@ export function Navbar() {
     <>
       <header
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-[rgba(250,247,244,0.92)] backdrop-blur-[20px] saturate-150 border-b border-black/[0.06]"
-        style={{ padding: scrolled ? "10px clamp(20px,4vw,60px)" : "18px clamp(20px,4vw,60px)" }}
+        style={{
+          padding: scrolled
+            ? "10px clamp(20px,4vw,60px)"
+            : "18px clamp(20px,4vw,60px)",
+        }}
       >
         <div className="flex items-center justify-between gap-4">
           <NavigationMenu className="max-md:hidden">
@@ -61,11 +65,34 @@ export function Navbar() {
 
           <Popover>
             <PopoverTrigger asChild>
-              <Button className="group size-8 md:hidden" size="icon" variant="ghost">
-                <svg className="pointer-events-none" fill="none" height={16} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width={16}>
-                  <path className="-translate-y-1.75 origin-center transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-315" d="M4 12L20 12" />
-                  <path className="origin-center transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.8)] group-aria-expanded:rotate-45" d="M4 12H20" />
-                  <path className="origin-center translate-y-1.75 transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-135" d="M4 12H20" />
+              <Button
+                className="group size-8 md:hidden"
+                size="icon"
+                variant="ghost"
+              >
+                <svg
+                  className="pointer-events-none"
+                  fill="none"
+                  height={16}
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  width={16}
+                >
+                  <path
+                    className="-translate-y-1.75 origin-center transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-315"
+                    d="M4 12L20 12"
+                  />
+                  <path
+                    className="origin-center transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.8)] group-aria-expanded:rotate-45"
+                    d="M4 12H20"
+                  />
+                  <path
+                    className="origin-center translate-y-1.75 transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-135"
+                    d="M4 12H20"
+                  />
                 </svg>
               </Button>
             </PopoverTrigger>
@@ -119,7 +146,13 @@ export function Navbar() {
               className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-black/5 transition-colors"
               aria-label="Search"
             >
-              <svg viewBox="0 0 24 24" className="w-4.25 h-4.25" fill="none" stroke="currentColor" strokeWidth="1.4">
+              <svg
+                viewBox="0 0 24 24"
+                className="w-4.25 h-4.25"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.4"
+              >
                 <circle cx="11" cy="11" r="7" />
                 <path d="m20 20-3.5-3.5" />
               </svg>
@@ -130,7 +163,13 @@ export function Navbar() {
               aria-label="Cart"
               onClick={() => setOpen(true)}
             >
-              <svg viewBox="0 0 24 24" className="w-4.25 h-4.25" fill="none" stroke="currentColor" strokeWidth="1.4">
+              <svg
+                viewBox="0 0 24 24"
+                className="w-4.25 h-4.25"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.4"
+              >
                 <path d="M6 7h12l-1.2 12.2a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8L6 7Z" />
                 <path d="M9 7V5a3 3 0 0 1 6 0v2" />
               </svg>

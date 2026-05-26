@@ -17,22 +17,29 @@ export default async function HomePage() {
     <>
       <Navbar />
       <main>
-        <Hero />
+        <Hero />{" "}
         <section id="collections">
           <Collections products={products} />
+        </section>
+        <section id="our-story">
+          <BrandStory />
+        </section>
+        <section id="collections">
           <Bestsellers products={products.slice(0, 6)} />
         </section>
         <Marquee />
-        <BrandStory />
-        <div style={{
-          height: "1px",
-          background: "linear-gradient(90deg, transparent, var(--gold), transparent)",
-          margin: "0 clamp(20px,4vw,60px)",
-        }} />
+        <div
+          style={{
+            height: "1px",
+            background:
+              "linear-gradient(90deg, transparent, var(--gold), transparent)",
+            margin: "0 clamp(20px,4vw,60px)",
+          }}
+        />
         <section id="social-proof">
           <SocialProof />
         </section>
-        <section id="ugc">
+        <section id="about">
           <UGCGrid />
         </section>
         <PromoSection />

@@ -24,10 +24,10 @@ export function UGCGrid() {
               sizes="(max-width: 768px) 100vw, 40vw"
             />
           </div>
-          <div className="flex items-center gap-3 mt-4 text-[11px] tracking-[0.2em] uppercase text-oria-muted">
+          {/* <div className="flex items-center gap-3 mt-4 text-[11px] tracking-[0.2em] uppercase text-oria-muted">
             <span className="block w-4 h-px bg-gold" />
             @leam.paris · #WornByOria
-          </div>
+          </div> */}
         </div>
 
         {/* Center text column */}
@@ -80,10 +80,10 @@ export function UGCGrid() {
               sizes="(max-width: 768px) 100vw, 40vw"
             />
           </div>
-          <div className="flex items-center gap-3 mt-4 text-[11px] tracking-[0.2em] uppercase text-oria-muted">
+          {/* <div className="flex items-center gap-3 mt-4 text-[11px] tracking-[0.2em] uppercase text-oria-muted">
             <span className="block w-4 h-px bg-gold" />
             @hafsa.k · #WornByOria
-          </div>
+          </div> */}
         </div>
       </div>
     </section>
