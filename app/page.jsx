@@ -19,7 +19,7 @@ export default async function HomePage() {
       <main>
         <Hero />
         <section id="collections">
-          <Collections />
+          <Collections products={products} />
           <Bestsellers products={products.slice(0, 6)} />
         </section>
         <Marquee />

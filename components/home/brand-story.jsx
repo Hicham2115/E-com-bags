@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+import brandPhoto from "@/app/assets/d6dfbbff7ad7ba911a653d2d2681de52.jpg";
 import { useReveal } from "@/hooks/use-reveal";
 
 export function BrandStory() {
@@ -12,26 +14,14 @@ export function BrandStory() {
         <div
           ref={ref1}
           className={`reveal relative rounded-xs overflow-hidden aspect-4/5 ${v1 ? "is-visible" : ""}`}
-          style={{ background: "linear-gradient(135deg, #d8c4a5 0%, #9c7a4e 100%)" }}
         >
-          <div
-            className="absolute inset-0"
-            style={{ backgroundImage: "repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 14px)" }}
+          <Image
+            src={brandPhoto}
+            alt="Woman carrying a Maison Oria leather bag"
+            fill
+            className="object-cover object-center"
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
-          <div
-            className="absolute inset-0"
-            style={{ background: "radial-gradient(ellipse at 70% 30%, rgba(255,240,220,0.3), transparent 60%)" }}
-          />
-
-          <svg
-            viewBox="0 0 400 500"
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] opacity-70"
-          >
-            <path d="M80 200 Q80 140 140 140 L260 140 Q320 140 320 200 L320 400 Q320 440 280 440 L120 440 Q80 440 80 400 Z" fill="#fff" fillOpacity="0.18" stroke="#fff" strokeWidth="1.5" strokeOpacity="0.5" />
-            <path d="M150 140 Q150 70 200 70 Q250 70 250 140" stroke="#fff" strokeWidth="8" fill="none" strokeOpacity="0.6" strokeLinecap="round" />
-            <rect x="185" y="180" width="30" height="14" fill="#fff" fillOpacity="0.5" />
-          </svg>
-
           <div className="absolute bottom-6 left-6 flex items-center gap-3 text-ivory text-[10px] tracking-[0.3em] uppercase">
             <span className="block w-6 h-px bg-gold" />
             Est. 2019 · Handcrafted

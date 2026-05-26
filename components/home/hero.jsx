@@ -6,7 +6,6 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { Button } from "@/components/ui/button";
 import { TypingAnimation } from "@/components/ui/typing-animation";
-
 export function Hero() {
   const imgRef = useRef(null);
   const eyebrowRef = useRef(null);
@@ -20,8 +19,13 @@ export function Hero() {
 
       // Set initial hidden states
       gsap.set(
-        [eyebrowRef.current, subtitleRef.current, bottomRef.current, stripRef.current],
-        { opacity: 0, y: 28 }
+        [
+          eyebrowRef.current,
+          subtitleRef.current,
+          bottomRef.current,
+          stripRef.current,
+        ],
+        { opacity: 0, y: 28 },
       );
       gsap.set(imgRef.current, { opacity: 0, scale: 1.04 });
 
@@ -118,11 +122,14 @@ export function Hero() {
               "Lifetime Repairs · Full-Grain Leather",
               "Every Bag · One Artisan · Start to Finish",
             ].map((item, j) => (
-              <span key={`${i}-${j}`} className="flex items-center gap-16 text-white/60">
+              <span
+                key={`${i}-${j}`}
+                className="flex items-center gap-16 text-white/60"
+              >
                 {item}
                 <span className="text-gold not-italic">✦</span>
               </span>
-            ))
+            )),
           )}
         </div>
       </div>
