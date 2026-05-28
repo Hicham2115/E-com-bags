@@ -1,14 +1,26 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { useCart } from "./cart-context";
 import { BagSVG } from "./bag-svg";
 import { swatchBg } from "@/lib/products";
+import { createCheckout } from "@/lib/shopify";
 
 export function CartDrawer({ open, onClose }) {
   const { items, removeItem, changeQty, subtotal } = useCart();
+  const [loading, setLoading] = useState(false);
+
+  async function handleCheckout() {
+    setLoading(true);
+    const url = await createCheckout(items);
+    setLoading(false);
+    if (url) {
+      window.location.href = url;
+    }
+  }
 
   return (
     <Sheet open={open} onOpenChange={(v) => !v && onClose()}>
@@ -87,8 +99,12 @@ export function CartDrawer({ open, onClose }) {
           <div className="text-[11px] text-[var(--oria-muted)] tracking-[0.18em] uppercase mb-5">
             Shipping & taxes calculated at checkout · Free worldwide over €500
           </div>
-          <Button className="w-full justify-center py-5 text-[12px] tracking-[0.22em] uppercase font-medium rounded-full bg-[var(--oria-text)] text-[var(--text-light)] hover:bg-[var(--gold)] hover:text-[var(--oria-text)] transition-all duration-500 border-0">
-            Proceed to Checkout →
+          <Button
+            onClick={handleCheckout}
+            disabled={loading || items.length === 0}
+            className="w-full justify-center py-5 text-[12px] tracking-[0.22em] uppercase font-medium rounded-full bg-[var(--oria-text)] text-[var(--text-light)] hover:bg-[var(--gold)] hover:text-[var(--oria-text)] transition-all duration-500 border-0 disabled:opacity-50"
+          >
+            {loading ? "Redirecting…" : "Proceed to Checkout →"}
           </Button>
         </div>
       </SheetContent>

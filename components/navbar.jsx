@@ -5,6 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCart } from "./cart-context";
 import { CartDrawer } from "./cart-drawer";
+import { WishlistDrawer } from "./wishlist-drawer";
+import { useWishlist } from "@/store/wishlist";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -29,6 +31,8 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const { count, open, setOpen } = useCart();
+  const { items: wishlistItems, setOpen: setWishlistOpen } = useWishlist();
+  const wishlistCount = wishlistItems.length;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -39,7 +43,7 @@ export function Navbar() {
   return (
     <>
       <header
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-[rgba(250,247,244,0.92)] backdrop-blur-[20px] saturate-150 border-b border-black/[0.06]"
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-[rgb(249,248,247)] backdrop-blur-[20px] saturate-150 border-b border-black/[0.06]"
         style={{
           padding: scrolled
             ? "10px clamp(20px,4vw,60px)"
@@ -143,8 +147,9 @@ export function Navbar() {
             </NavigationMenu>
 
             <button
-              className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-black/5 transition-colors"
-              aria-label="Search"
+              className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-black/5 transition-colors relative"
+              aria-label="Wishlist"
+              onClick={() => setWishlistOpen(true)}
             >
               <svg
                 viewBox="0 0 24 24"
@@ -152,10 +157,15 @@ export function Navbar() {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.4"
+                style={wishlistCount > 0 ? { stroke: "var(--gold)", fill: "var(--gold)" } : undefined}
               >
-                <circle cx="11" cy="11" r="7" />
-                <path d="m20 20-3.5-3.5" />
+                <path d="M12 21s-7-4.5-9-9.5C1.5 7 5 4 8 4c2 0 3 1 4 2 1-1 2-2 4-2 3 0 6.5 3 5 7.5-2 5-9 9.5-9 9.5z" />
               </svg>
+              {wishlistCount > 0 && (
+                <span className="absolute top-0.5 right-0.5 bg-gold text-oria-text text-[9px] font-semibold min-w-3.75 h-3.75 rounded-full flex items-center justify-center px-1">
+                  {wishlistCount}
+                </span>
+              )}
             </button>
 
             <button
@@ -170,8 +180,9 @@ export function Navbar() {
                 stroke="currentColor"
                 strokeWidth="1.4"
               >
-                <path d="M6 7h12l-1.2 12.2a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8L6 7Z" />
-                <path d="M9 7V5a3 3 0 0 1 6 0v2" />
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 0 1-8 0" />
               </svg>
               {count > 0 && (
                 <span className="absolute top-0.5 right-0.5 bg-gold text-oria-text text-[9px] font-semibold min-w-3.75 h-3.75 rounded-full flex items-center justify-center px-1">
@@ -184,6 +195,7 @@ export function Navbar() {
       </header>
 
       <CartDrawer open={open} onClose={() => setOpen(false)} />
+      <WishlistDrawer />
     </>
   );
 }

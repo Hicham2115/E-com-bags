@@ -136,15 +136,6 @@ export function ProductDetail({ product, suggested }) {
                 </Badge>
               )}
               <ProductImage src={activeImage} color={selectedColor} />
-              <button
-                className="absolute bottom-4 left-4 z-10 flex items-center gap-2 px-3.5 py-2.5 rounded-full text-[10px] tracking-[0.22em] uppercase font-medium"
-                style={{ background: "rgba(255,255,255,0.92)", backdropFilter: "blur(10px)" }}
-              >
-                <svg viewBox="0 0 24 24" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="1.4">
-                  <path d="M3 12a9 4 0 1 0 18 0M3 12a9 4 0 1 1 18 0M6 9l3 3-3 3" />
-                </svg>
-                View in 360°
-              </button>
             </div>
           </div>
 

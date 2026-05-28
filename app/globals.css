@@ -49,7 +49,7 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 
   /* Maison Oria design tokens */
-  --color-ivory: #FAF7F4;
+  --color-ivory: #F9F8F7;
   --color-ivory-2: #F2EDE6;
   --color-oria-black: #0D0D0D;
   --color-charcoal: #2C2C2C;
@@ -72,11 +72,11 @@
 }
 
 :root {
-  --background: #FAF7F4;
+  --background: #F9F8F7;
   --foreground: #1A1A1A;
-  --card: #FAF7F4;
+  --card: #F9F8F7;
   --card-foreground: #1A1A1A;
-  --popover: #FAF7F4;
+  --popover: #F9F8F7;
   --popover-foreground: #1A1A1A;
   --primary: #1A1A1A;
   --primary-foreground: #FAF7F4;
@@ -96,7 +96,7 @@
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
   --radius: 0.25rem;
-  --sidebar: #FAF7F4;
+  --sidebar: #F9F8F7;
   --sidebar-foreground: #1A1A1A;
   --sidebar-primary: #1A1A1A;
   --sidebar-primary-foreground: #FAF7F4;
@@ -106,7 +106,7 @@
   --sidebar-ring: #C9A96E;
 
   /* Maison Oria */
-  --ivory: #FAF7F4;
+  --ivory: #F9F8F7;
   --ivory-2: #F2EDE6;
   --oria-black: #0D0D0D;
   --charcoal: #2C2C2C;
@@ -164,6 +164,7 @@
   }
   html {
     scroll-behavior: smooth;
+    font-size: clamp(13px, 0.85vw + 6px, 15px);
   }
   h1, h2, h3, h4 {
     font-family: var(--serif);

@@ -10,7 +10,6 @@ export function PromoSection() {
     const end = new Date();
     end.setDate(end.getDate() + 7);
     end.setHours(end.getHours() + 14);
-
     const tick = () => {
       const diff = Math.max(0, end.getTime() - Date.now());
       setTime({
@@ -28,50 +27,128 @@ export function PromoSection() {
   const pad = (n) => String(n).padStart(2, "0");
 
   return (
-    <section className="relative overflow-hidden text-center bg-gold text-oria-text py-[clamp(70px,10vw,120px)] px-[clamp(20px,4vw,60px)]">
+    <section
+      className="relative overflow-hidden"
+      style={{
+        background: "linear-gradient(135deg, #0e0c0a 0%, #1a1610 50%, #0e0c0a 100%)",
+      }}
+    >
+      {/* Gold radial glow */}
       <div
-        className="absolute top-0 left-[-50%] w-[200%] h-full pointer-events-none"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent)",
-          animation: "shimmer 5s linear infinite",
+          background: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(201,169,110,0.08) 0%, transparent 70%)",
         }}
       />
 
-      <div className="text-[11px] tracking-[0.35em] uppercase font-medium mb-6">Limited — Through April 30</div>
-      <h2 className="font-serif text-[clamp(48px,7vw,96px)] leading-[0.98] relative z-10 mb-9">
-        Buy two, the <em className="italic">third is ours.</em>
-      </h2>
+      {/* Top gold rule */}
+      <div className="gold-rule opacity-30" />
 
-      <div className="inline-flex gap-7 mb-10 relative z-10">
-        {[
-          { val: pad(time.d), label: "Days" },
-          { val: ":", label: null },
-          { val: pad(time.h), label: "Hours" },
-          { val: ":", label: null },
-          { val: pad(time.m), label: "Min" },
-          { val: ":", label: null },
-          { val: pad(time.s), label: "Sec" },
-        ].map((cell, i) =>
-          cell.label === null ? (
-            <span key={i} className="font-serif text-[40px] opacity-40 self-start pt-2">:</span>
-          ) : (
-            <div key={i} className="flex flex-col items-center">
-              <strong className="font-serif text-[clamp(40px,5vw,64px)] font-normal leading-none tabular-nums">
-                {cell.val}
-              </strong>
-              <span className="text-[10px] tracking-[0.3em] uppercase mt-2 opacity-70">{cell.label}</span>
+      <div className="relative z-10 px-[clamp(20px,6vw,100px)] py-[clamp(60px,10vw,120px)]">
+        <div className="grid md:grid-cols-[1fr_auto] gap-16 items-center max-w-[1400px] mx-auto">
+
+          {/* LEFT — offer text */}
+          <div>
+            <div className="flex items-center gap-3 mb-8">
+              <div className="h-px w-10 bg-gold opacity-60" />
+              <span className="text-[10px] tracking-[0.45em] text-gold uppercase">
+                Limited Offer — Through April 30
+              </span>
             </div>
-          )
-        )}
+
+            <h2
+              className="font-serif leading-[0.92] tracking-[-0.02em] text-text-light mb-8"
+              style={{ fontSize: "clamp(2.8rem, 5.5vw, 5.5rem)" }}
+            >
+              Buy two,
+              <br />
+              the{" "}
+              <em
+                className="not-italic"
+                style={{
+                  background: "linear-gradient(135deg, #C9A96E 0%, #e8c87a 50%, #a8884d 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                third is ours.
+              </em>
+            </h2>
+
+            <p className="text-[13px] tracking-[0.08em] text-oria-muted leading-relaxed mb-10 max-w-sm">
+              Add three pieces to your cart. The lowest-priced item is
+              automatically deducted at checkout. No code needed.
+            </p>
+
+            <Link
+              href="/products"
+              className="inline-flex items-center gap-3 px-8 py-3.5 text-[11px] tracking-[0.3em] uppercase font-medium text-oria-black bg-gold hover:bg-gold-deep transition-colors duration-400"
+            >
+              Shop the Offer →
+            </Link>
+          </div>
+
+          {/* RIGHT — countdown */}
+          <div className="flex flex-col items-center md:items-end gap-6">
+            <span className="text-[10px] tracking-[0.4em] text-oria-muted uppercase">
+              Offer ends in
+            </span>
+
+            <div className="flex items-start gap-4">
+              {[
+                { val: pad(time.d), label: "Days" },
+                { val: pad(time.h), label: "Hours" },
+                { val: pad(time.m), label: "Min" },
+                { val: pad(time.s), label: "Sec" },
+              ].map((cell, i) => (
+                <div key={i} className="flex items-start gap-4">
+                  <div className="flex flex-col items-center">
+                    <div
+                      className="flex items-center justify-center mb-2.5"
+                      style={{
+                        width: "clamp(64px, 7vw, 92px)",
+                        height: "clamp(64px, 7vw, 92px)",
+                        border: "1px solid rgba(201,169,110,0.25)",
+                        background: "rgba(201,169,110,0.04)",
+                      }}
+                    >
+                      <span
+                        className="font-serif tabular-nums leading-none text-text-light"
+                        style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}
+                      >
+                        {cell.val}
+                      </span>
+                    </div>
+                    <span className="text-[9px] tracking-[0.35em] text-oria-muted uppercase">
+                      {cell.label}
+                    </span>
+                  </div>
+                  {i < 3 && (
+                    <span
+                      className="font-serif text-gold/40 self-start"
+                      style={{ fontSize: "clamp(1.4rem, 2vw, 2rem)", marginTop: "0.6rem" }}
+                    >
+                      :
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Decorative ornament */}
+            <svg width="48" height="48" viewBox="0 0 32 32" fill="none" className="opacity-20 mt-2">
+              <path d="M16 2 L30 16 L16 30 L2 16 Z" stroke="#C9A96E" strokeWidth="1" fill="none" />
+              <path d="M16 7 L25 16 L16 25 L7 16 Z" stroke="#C9A96E" strokeWidth="0.6" fill="none" opacity="0.5" />
+              <circle cx="16" cy="16" r="1.5" fill="#C9A96E" />
+            </svg>
+          </div>
+
+        </div>
       </div>
 
-      <div>
-        <Link href="/products">
-          <button className="inline-flex items-center gap-2.5 text-[12px] tracking-[0.22em] uppercase font-medium px-8 py-4.5 rounded-full border border-oria-text hover:bg-oria-text hover:text-gold transition-all duration-500">
-            Shop The Offer →
-          </button>
-        </Link>
-      </div>
+      {/* Bottom gold rule */}
+      <div className="gold-rule opacity-30" />
     </section>
   );
 }

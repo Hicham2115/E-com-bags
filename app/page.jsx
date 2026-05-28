@@ -19,7 +19,7 @@ export default async function HomePage() {
       <main>
         <Hero />{" "}
         <section id="collections">
-          <Collections products={products} />
+          <Collections />
         </section>
         <section id="our-story">
           <BrandStory />

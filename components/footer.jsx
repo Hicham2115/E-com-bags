@@ -33,9 +33,28 @@ export function Footer() {
           </p>
           <div className="flex gap-3.5">
             {[
-              { label: "Instagram", path: "M3 3h18v18H3zM12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM17.5 6.5a.9.9 0 1 1 0 1.8.9.9 0 0 1 0-1.8z" },
-              { label: "TikTok", path: "M14 4v10.5a3.5 3.5 0 1 1-3.5-3.5M14 4a4 4 0 0 4 4" },
-              { label: "Pinterest", path: "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM11 8v8M11 8a3 3 0 1 1 3 3c-2 0-3 2-3 5" },
+              {
+                label: "Instagram",
+                svg: (
+                  <>
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" strokeLinecap="round" strokeWidth="2.5" />
+                  </>
+                ),
+              },
+              {
+                label: "TikTok",
+                svg: (
+                  <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                ),
+              },
+              {
+                label: "Facebook",
+                svg: (
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                ),
+              },
             ].map((s) => (
               <a
                 key={s.label}
@@ -44,7 +63,7 @@ export function Footer() {
                 className="w-11 h-11 rounded-full border border-[rgba(245,240,234,0.18)] flex items-center justify-center transition-all duration-500 hover:scale-[1.08]"
               >
                 <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.4">
-                  <path d={s.path} />
+                  {s.svg}
                 </svg>
               </a>
             ))}

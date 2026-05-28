@@ -11,11 +11,12 @@ export default function LoadingScreen() {
   const dividerRef = useRef(null);
   const taglineRef = useRef(null);
   const progressBarRef = useRef(null);
-  const [visible, setVisible] = useState(() =>
-    typeof window === "undefined"
-      ? true
-      : !sessionStorage.getItem("loading-seen")
-  );
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("loading-seen")) return;
+    setVisible(true);
+  }, []);
 
   useEffect(() => {
     if (!visible) return;
@@ -52,7 +53,7 @@ export default function LoadingScreen() {
         ease: "power3.inOut",
         delay: 0.25,
         onComplete: () => {
-          sessionStorage.setItem("loading-seen", "1");
+          localStorage.setItem("loading-seen", "1");
           setVisible(false);
         },
       });

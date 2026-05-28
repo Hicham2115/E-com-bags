@@ -7,10 +7,12 @@ import { swatchBg } from "@/lib/products";
 import { BagSVG } from "./bag-svg";
 import { Badge } from "@/components/ui/badge";
 import { useCart } from "./cart-context";
+import { useWishlist } from "@/store/wishlist";
 
 export function ProductCard({ product: p, offsetY = false }) {
-  const [wished, setWished] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const { toggle, isLiked } = useWishlist();
+  const wished = isLiked(p.id);
   const { addItem } = useCart();
 
   const hasImages = p.images.length > 0;
@@ -65,7 +67,7 @@ export function ProductCard({ product: p, offsetY = false }) {
             className="absolute top-[14px] right-[14px] z-10 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center transition-all duration-300"
             style={wished ? { background: "var(--oria-text)" } : undefined}
             aria-label="Add to wishlist"
-            onClick={(e) => { e.preventDefault(); setWished(!wished); }}
+            onClick={(e) => { e.preventDefault(); toggle(p); }}
           >
             <svg
               viewBox="0 0 24 24"
