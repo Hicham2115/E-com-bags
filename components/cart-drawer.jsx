@@ -1,30 +1,33 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { useCart } from "./cart-context";
 import { BagSVG } from "./bag-svg";
 import { swatchBg } from "@/lib/products";
+import { toast } from "sonner";
+import { useMutation } from "@tanstack/react-query";
+
+async function createCheckout(items) {
+  const res = await fetch("/api/checkout", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ items }),
+  });
+  const data = await res.json();
+  if (!data.checkoutUrl) throw new Error(data.error ?? "No checkout URL");
+  return data.checkoutUrl;
+}
+
 export function CartDrawer({ open, onClose }) {
   const { items, removeItem, changeQty, subtotal } = useCart();
-  const [loading, setLoading] = useState(false);
 
-  async function handleCheckout() {
-    setLoading(true);
-    try {
-      const res = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items }),
-      });
-      const { checkoutUrl } = await res.json();
-      if (checkoutUrl) window.location.href = checkoutUrl;
-    } finally {
-      setLoading(false);
-    }
-  }
+  const { mutate: checkout, isPending } = useMutation({
+    mutationFn: () => createCheckout(items),
+    onSuccess: (url) => { window.location.href = url; },
+    onError: () => toast.error("Checkout unavailable right now. Please try again."),
+  });
 
   return (
     <Sheet open={open} onOpenChange={(v) => !v && onClose()}>
@@ -44,7 +47,20 @@ export function CartDrawer({ open, onClose }) {
 
         <div className="flex-1 overflow-y-auto px-8 py-6">
           {items.length === 0 ? (
-            <p className="text-center text-[var(--oria-muted)] py-10">Your bag is empty.</p>
+            <div className="flex flex-col items-center justify-center py-20 gap-5 text-center">
+              <svg viewBox="0 0 24 24" className="w-12 h-12 opacity-15" fill="none" stroke="currentColor" strokeWidth="1.2">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 0 1-8 0" />
+              </svg>
+              <div>
+                <p style={{ fontFamily: "var(--serif)", fontSize: "22px" }} className="mb-1">Your bag is empty</p>
+                <p className="text-[12px] tracking-[0.12em] text-[var(--oria-muted)]">Add something beautiful to get started.</p>
+              </div>
+              <a href="/products" onClick={onClose} className="text-[11px] tracking-[0.25em] uppercase border-b border-current pb-0.5 transition-opacity hover:opacity-60">
+                Browse Collection →
+              </a>
+            </div>
           ) : (
             items.map((item) => (
               <div key={item.id} className="grid grid-cols-[80px_1fr_auto] gap-4 py-4 border-b border-[var(--line)]">
@@ -104,11 +120,11 @@ export function CartDrawer({ open, onClose }) {
             Shipping & taxes calculated at checkout · Free worldwide over 5,000 MAD
           </div>
           <Button
-            onClick={handleCheckout}
-            disabled={loading || items.length === 0}
+            onClick={() => checkout()}
+            disabled={isPending || items.length === 0}
             className="w-full justify-center py-5 text-[12px] tracking-[0.22em] uppercase font-medium rounded-full bg-[var(--oria-text)] text-[var(--text-light)] hover:bg-[var(--gold)] hover:text-[var(--oria-text)] transition-all duration-500 border-0 disabled:opacity-50"
           >
-            {loading ? "Redirecting…" : "Proceed to Checkout →"}
+            {isPending ? "Redirecting…" : "Proceed to Checkout →"}
           </Button>
         </div>
       </SheetContent>

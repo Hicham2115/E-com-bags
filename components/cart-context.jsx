@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState } from "react";
+import { toast } from "sonner";
 
 const CartContext = createContext(null);
 
@@ -14,8 +15,10 @@ export function CartProvider({ children }) {
     setItems((prev) => {
       const existing = prev.find((x) => x.id === itemKey);
       if (existing) {
+        toast.success(`${product.name} updated in bag`);
         return prev.map((x) => x.id === itemKey ? { ...x, qty: x.qty + qty } : x);
       }
+      toast.success(`${product.name} added to bag`);
       return [...prev, {
         id: itemKey,
         variantId: product.variantId,

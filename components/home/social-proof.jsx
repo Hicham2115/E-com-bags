@@ -66,10 +66,10 @@ export function SocialProof() {
 
   return (
     <section className="bg-oria-text text-text-light py-[clamp(80px,10vw,140px)] relative overflow-hidden">
-      <div className="mx-auto max-w-360 px-[clamp(20px,4vw,60px)] grid grid-cols-[360px_1fr] gap-20 items-start">
+      <div className="mx-auto max-w-360 px-[clamp(20px,4vw,60px)] grid grid-cols-1 md:grid-cols-[340px_1fr] gap-12 md:gap-20 items-start">
         <div
           ref={ref}
-          className={`reveal sticky top-25 ${visible ? "is-visible" : ""}`}
+          className={`reveal md:sticky md:top-25 ${visible ? "is-visible" : ""}`}
         >
           <div className="text-[11px] tracking-[0.3em] uppercase text-gold mb-5">
             — Customer Reviews
@@ -129,12 +129,12 @@ export function SocialProof() {
 
         <div
           ref={ref2}
-          className={`reveal-stagger grid grid-cols-2 gap-6 ${v2 ? "is-visible" : ""}`}
+          className={`reveal-stagger grid grid-cols-1 sm:grid-cols-2 gap-6 ${v2 ? "is-visible" : ""}`}
         >
           {reviews.map((r, i) => (
             <article
               key={i}
-              className={`flex flex-col p-7 rounded-md border border-[rgba(245,240,234,0.08)] bg-[rgba(245,240,234,0.04)] transition-all duration-500 hover:-translate-y-1 hover:border-[rgba(201,169,110,0.3)] ${r.feature ? "col-span-2" : ""}`}
+              className={`flex flex-col p-7 rounded-md border border-[rgba(245,240,234,0.08)] bg-[rgba(245,240,234,0.04)] transition-all duration-500 hover:-translate-y-1 hover:border-[rgba(201,169,110,0.3)] ${r.feature ? "sm:col-span-2" : ""}`}
             >
               <div className="flex items-center gap-3.5 mb-[18px]">
                 <div
@@ -220,14 +220,6 @@ export function SocialProof() {
             </article>
           ))}
 
-          {/* <div className="col-span-2 flex justify-between items-center flex-wrap gap-6 pt-9 border-t border-[rgba(245,240,234,0.08)]">
-            <p className="font-serif italic text-[18px] text-[rgba(245,240,234,0.6)]">
-              "A bag should hold what matters. The rest is just leather."
-            </p>
-            <button className="inline-flex items-center gap-2.5 text-[12px] tracking-[0.22em] uppercase font-medium px-8 py-[18px] rounded-full border border-[rgba(245,240,234,0.35)] text-text-light transition-all duration-500 hover:bg-gold hover:border-gold hover:text-oria-text">
-              Read All 2,147 Reviews →
-            </button>
-          </div> */}
         </div>
       </div>
     </section>

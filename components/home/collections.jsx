@@ -71,15 +71,13 @@ export function Collections() {
       {/* Grid: large left + two stacked right */}
       <div
         ref={gridRef}
-        className="px-[clamp(20px,4vw,60px)] grid gap-4"
-        style={{ gridTemplateColumns: "1.45fr 1fr" }}
+        className="px-[clamp(20px,4vw,60px)] grid gap-4 grid-cols-1 md:grid-cols-[1.45fr_1fr]"
       >
         {/* LEFT: Atlas — tall hero card */}
         <div
-          className="relative overflow-hidden rounded-xs group cursor-pointer"
+          className="relative overflow-hidden rounded-xs group cursor-pointer md:row-[1/3]"
           style={{
-            gridRow: "1 / 3",
-            height: "clamp(520px, 78vh, 860px)",
+            height: "clamp(340px, 60vw, 860px)",
             background: collections[0].bg,
             opacity: gridVisible ? 1 : 0,
             transform: gridVisible ? "translateY(0)" : "translateY(48px)",

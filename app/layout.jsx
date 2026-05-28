@@ -3,6 +3,8 @@ import "./globals.css";
 import { CartProvider } from "@/components/cart-context";
 import { LenisProvider } from "@/components/lenis-provider";
 import LoadingScreen from "@/components/loading-screen";
+import { Toaster } from "@/components/ui/sonner";
+import { QueryProvider } from "@/components/query-provider";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -27,12 +29,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
       <body className="overflow-x-hidden antialiased">
-        <LenisProvider>
-          <CartProvider>
-            <LoadingScreen />
-            {children}
-          </CartProvider>
-        </LenisProvider>
+        <QueryProvider>
+          <LenisProvider>
+            <CartProvider>
+              <LoadingScreen />
+              {children}
+              <Toaster position="bottom-right" richColors />
+            </CartProvider>
+          </LenisProvider>
+        </QueryProvider>
       </body>
     </html>
   );

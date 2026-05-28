@@ -9,6 +9,7 @@ import { ProductCard } from "@/components/product-card";
 import { BagSVG } from "@/components/bag-svg";
 import { useCart } from "@/components/cart-context";
 import { useWishlist } from "@/store/wishlist";
+import { toast } from "sonner";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -105,9 +106,9 @@ export function ProductDetail({ product, suggested }) {
           <strong style={{ color: "var(--oria-text)", fontWeight: 500 }}>{product.name}</strong>
         </div>
 
-        <div className="grid gap-20 py-10 pb-30" style={{ gridTemplateColumns: "1.2fr 1fr" }}>
+        <div className="grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-10 md:gap-20 py-10 pb-20 md:pb-30">
           {/* Image gallery */}
-          <div className="grid gap-5" style={{ gridTemplateColumns: "80px 1fr", alignItems: "start" }}>
+          <div className="grid gap-3 md:gap-5" style={{ gridTemplateColumns: "72px 1fr", alignItems: "start" }}>
             <div className="flex flex-col gap-2.5">
               {(thumbImages ?? thumbColors).map((src, i) => (
                 <button
@@ -143,7 +144,7 @@ export function ProductDetail({ product, suggested }) {
           </div>
 
           {/* Product info */}
-          <div style={{ position: "sticky", top: "100px", alignSelf: "start" }}>
+          <div className="md:sticky md:top-25 md:self-start">
             <div style={{ fontSize: "11px", letterSpacing: "0.25em", textTransform: "uppercase", color: "var(--oria-muted)" }}>
               — N° 01 / The Atlas Edit
             </div>
@@ -230,7 +231,7 @@ export function ProductDetail({ product, suggested }) {
               <Button
                 variant="outline"
                 className="w-full justify-center py-5 text-[12px] tracking-[0.22em] uppercase font-medium rounded-full border-[var(--oria-text)] hover:bg-[var(--oria-text)] hover:text-[var(--text-light)] transition-all duration-500"
-                onClick={() => toggle(product)}
+                onClick={() => { toggle(product); toast.success(wished ? `${product.name} removed from wishlist` : `${product.name} saved to wishlist`); }}
                 style={wished ? { background: "var(--oria-text)", color: "var(--gold)" } : undefined}
               >
                 {wished ? "Saved to Wishlist ♥" : "Add to Wishlist ♡"}

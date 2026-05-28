@@ -41,6 +41,7 @@ export function ProductsCatalog({ products }) {
   const [priceMin, setPriceMin] = useState(globalMin);
   const [priceMax, setPriceMax] = useState(globalMax);
   const [sort, setSort] = useState("Featured");
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const filtered = useMemo(() => {
     let list = products.slice();
@@ -124,55 +125,30 @@ export function ProductsCatalog({ products }) {
               All Bags
             </strong>
           </div>
-          <div className="flex justify-between items-end flex-wrap gap-6">
-            <h1
-              style={{
-                fontFamily: "var(--serif)",
-                fontSize: "clamp(48px,6vw,88px)",
-                fontWeight: 400,
-              }}
-            >
-              All{" "}
-              <span
-                style={{
-                  color: "var(--gold-deep)",
-                  fontFamily: "var(--serif)",
-                }}
-              >
-                Bags
-              </span>
+          <div className="flex justify-between items-end flex-wrap gap-4">
+            <h1 style={{ fontFamily: "var(--serif)", fontSize: "clamp(40px,6vw,88px)", fontWeight: 400 }}>
+              All <span style={{ color: "var(--gold-deep)", fontFamily: "var(--serif)" }}>Bags</span>
             </h1>
-            <div
-              style={{
-                fontSize: "13px",
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: "var(--oria-muted)",
-              }}
-            >
-              Showing {filtered.length} of {products.length} products
+            <div className="flex items-center gap-4">
+              <span style={{ fontSize: "13px", letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--oria-muted)" }}>
+                {filtered.length} of {products.length} products
+              </span>
+              <button
+                className="md:hidden inline-flex items-center gap-2 text-[11px] tracking-[0.22em] uppercase border border-[var(--line)] rounded-full px-4 py-2 hover:border-[var(--oria-text)] transition-colors"
+                onClick={() => setFiltersOpen((v) => !v)}
+              >
+                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M3 6h18M7 12h10M10 18h4" strokeLinecap="round" />
+                </svg>
+                {filtersOpen ? "Hide Filters" : "Filters"}
+              </button>
             </div>
           </div>
         </div>
       </div>
 
-      <div
-        className="grid mx-auto"
-        style={{
-          maxWidth: "1440px",
-          gridTemplateColumns: "260px 1fr",
-          gap: "60px",
-          padding: "60px clamp(20px,4vw,60px) 120px",
-        }}
-      >
-        <aside
-          style={{
-            position: "sticky",
-            top: "100px",
-            alignSelf: "start",
-            fontSize: "13px",
-          }}
-        >
+      <div className="mx-auto max-w-[1440px] px-[clamp(20px,4vw,60px)] py-16 pb-30 md:grid md:gap-15" style={{ gridTemplateColumns: "260px 1fr" }}>
+        <aside className={`${filtersOpen ? "block" : "hidden"} md:block text-[13px] sticky top-25 self-start mb-10 md:mb-0`}>
           <div
             style={{
               paddingBottom: "24px",
@@ -333,7 +309,7 @@ export function ProductsCatalog({ products }) {
         </aside>
 
         <div>
-          <div className="grid grid-cols-3 gap-x-7 gap-y-10">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-10 md:gap-x-7">
             {filtered.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}
@@ -350,11 +326,6 @@ export function ProductsCatalog({ products }) {
               No products match your filters.
             </div>
           )}
-          {/* <div className="flex justify-center mt-20">
-            <button className="inline-flex items-center gap-2.5 text-[12px] tracking-[0.22em] uppercase font-medium px-8 py-[18px] rounded-full border border-[var(--oria-text)] hover:bg-[var(--oria-text)] hover:text-[var(--ivory)] transition-all duration-500">
-              Load More ↓
-            </button>
-          </div> */}
         </div>
       </div>
 

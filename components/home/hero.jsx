@@ -76,14 +76,14 @@ export function Hero() {
             showCursor={false}
             startOnView={false}
             natural={true}
-            className="font-serif text-[120px] font-medium leading-[0.88] tracking-[-0.03em] text-text-light m-0 uppercase max-w-275"
+            className="font-serif text-[clamp(48px,10vw,120px)] font-medium leading-[0.88] tracking-[-0.03em] text-text-light m-0 uppercase max-w-275"
           >
             WHERE A BAG BECOMES A STORY
           </TypingAnimation>
 
           <h1
             ref={subtitleRef}
-            className="font-serif text-[120px] font-medium leading-[0.88] tracking-[-0.03em] text-text-light m-0 uppercase max-w-275"
+            className="font-serif text-[clamp(48px,10vw,120px)] font-medium leading-[0.88] tracking-[-0.03em] text-text-light m-0 uppercase max-w-275"
           >
             <span className="flex text-[20px] tracking-[0.26em] uppercase font-medium mt-4 gap-2">
               Crafted with intention. Carried with purpose.

@@ -92,10 +92,10 @@ export function Bestsellers({ products }) {
           {bestsellerItems.map((p) => (
             <div
               key={p.id}
-              className="min-w-50"
               style={{
                 scrollSnapAlign: "start",
-                flex: "0 0 calc((100% - 56px) / 3)",
+                flex: "0 0 clamp(220px, 75vw, calc((100% - 56px) / 3))",
+                minWidth: 0,
               }}
             >
               <ProductCard product={p} />

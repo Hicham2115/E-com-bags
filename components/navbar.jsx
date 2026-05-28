@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useCart } from "./cart-context";
 import { CartDrawer } from "./cart-drawer";
 import { WishlistDrawer } from "./wishlist-drawer";
+import { SearchModal } from "./search-modal";
 import { useWishlist } from "@/store/wishlist";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,6 +34,7 @@ export function Navbar() {
   const { count, open, setOpen } = useCart();
   const { items: wishlistItems, setOpen: setWishlistOpen } = useWishlist();
   const wishlistCount = wishlistItems.length;
+  const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -50,78 +52,59 @@ export function Navbar() {
             : "18px clamp(20px,4vw,60px)",
         }}
       >
-        <div className="flex items-center justify-between gap-4">
-          <NavigationMenu className="max-md:hidden">
-            <NavigationMenuList className="gap-1">
-              {links.slice(0, 2).map((link) => (
-                <NavigationMenuItem key={link.label}>
-                  <NavigationMenuLink
-                    active={pathname === link.href}
-                    className="flex-row items-center gap-2 py-1.5 text-[11px] tracking-[0.22em] uppercase font-medium text-oria-text"
-                    href={link.href}
-                  >
-                    {link.label}
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              ))}
-            </NavigationMenuList>
-          </NavigationMenu>
+        <div className="flex items-center">
+          {/* Left */}
+          <div className="flex flex-1 items-center gap-2">
+            <NavigationMenu className="max-md:hidden">
+              <NavigationMenuList className="gap-1">
+                {links.slice(0, 2).map((link) => (
+                  <NavigationMenuItem key={link.label}>
+                    <NavigationMenuLink
+                      active={pathname === link.href}
+                      className="flex-row items-center gap-2 py-1.5 text-[11px] tracking-[0.22em] uppercase font-medium text-oria-text"
+                      href={link.href}
+                    >
+                      {link.label}
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                ))}
+              </NavigationMenuList>
+            </NavigationMenu>
 
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                className="group size-8 md:hidden"
-                size="icon"
-                variant="ghost"
-              >
-                <svg
-                  className="pointer-events-none"
-                  fill="none"
-                  height={16}
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  width={16}
-                >
-                  <path
-                    className="-translate-y-1.75 origin-center transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-315"
-                    d="M4 12L20 12"
-                  />
-                  <path
-                    className="origin-center transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.8)] group-aria-expanded:rotate-45"
-                    d="M4 12H20"
-                  />
-                  <path
-                    className="origin-center translate-y-1.75 transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-135"
-                    d="M4 12H20"
-                  />
-                </svg>
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent align="start" className="w-48 p-2 md:hidden">
-              <NavigationMenu className="max-w-none *:w-full">
-                <NavigationMenuList className="flex-col items-start gap-0">
-                  {links.map((link) => (
-                    <NavigationMenuItem key={link.label} className="w-full">
-                      <NavigationMenuLink
-                        active={pathname === link.href}
-                        className="py-2 text-[11px] tracking-[0.22em] uppercase font-medium text-oria-text"
-                        href={link.href}
-                      >
-                        {link.label}
-                      </NavigationMenuLink>
-                    </NavigationMenuItem>
-                  ))}
-                </NavigationMenuList>
-              </NavigationMenu>
-            </PopoverContent>
-          </Popover>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button className="group size-8 md:hidden" size="icon" variant="ghost">
+                  <svg className="pointer-events-none" fill="none" height={16} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width={16}>
+                    <path className="-translate-y-1.75 origin-center transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-315" d="M4 12L20 12" />
+                    <path className="origin-center transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.8)] group-aria-expanded:rotate-45" d="M4 12H20" />
+                    <path className="origin-center translate-y-1.75 transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-135" d="M4 12H20" />
+                  </svg>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent align="start" className="w-48 p-2 md:hidden">
+                <NavigationMenu className="max-w-none *:w-full">
+                  <NavigationMenuList className="flex-col items-start gap-0">
+                    {links.map((link) => (
+                      <NavigationMenuItem key={link.label} className="w-full">
+                        <NavigationMenuLink
+                          active={pathname === link.href}
+                          className="py-2 text-[11px] tracking-[0.22em] uppercase font-medium text-oria-text"
+                          href={link.href}
+                        >
+                          {link.label}
+                        </NavigationMenuLink>
+                      </NavigationMenuItem>
+                    ))}
+                  </NavigationMenuList>
+                </NavigationMenu>
+              </PopoverContent>
+            </Popover>
+          </div>
 
+          {/* Center */}
           <Link
             href="/"
-            className="absolute left-1/2 -translate-x-1/2 text-center font-serif text-[22px] tracking-[0.22em] font-medium text-oria-text"
+            className="text-center font-serif text-[22px] tracking-[0.22em] font-medium text-oria-text shrink-0"
           >
             MAISON ORIA
             <small className="block text-[9px] tracking-[0.5em] uppercase mt-0.5 font-sans text-oria-muted">
@@ -129,7 +112,19 @@ export function Navbar() {
             </small>
           </Link>
 
-          <div className="flex items-center gap-4 ml-auto">
+          {/* Right */}
+          <div className="flex flex-1 items-center justify-end gap-3">
+            <button
+              className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-black/5 transition-colors"
+              aria-label="Search"
+              onClick={() => setSearchOpen(true)}
+            >
+              <svg viewBox="0 0 24 24" className="w-4.25 h-4.25" fill="none" stroke="currentColor" strokeWidth="1.4">
+                <circle cx="11" cy="11" r="7" />
+                <path d="m20 20-3.5-3.5" />
+              </svg>
+            </button>
+
             <NavigationMenu className="max-md:hidden">
               <NavigationMenuList className="gap-1">
                 {links.slice(2).map((link) => (
@@ -151,14 +146,8 @@ export function Navbar() {
               aria-label="Wishlist"
               onClick={() => setWishlistOpen(true)}
             >
-              <svg
-                viewBox="0 0 24 24"
-                className="w-4.25 h-4.25"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.4"
-                style={wishlistCount > 0 ? { stroke: "var(--gold)", fill: "var(--gold)" } : undefined}
-              >
+              <svg viewBox="0 0 24 24" className="w-4.25 h-4.25" fill="none" stroke="currentColor" strokeWidth="1.4"
+                style={wishlistCount > 0 ? { stroke: "var(--gold)", fill: "var(--gold)" } : undefined}>
                 <path d="M12 21s-7-4.5-9-9.5C1.5 7 5 4 8 4c2 0 3 1 4 2 1-1 2-2 4-2 3 0 6.5 3 5 7.5-2 5-9 9.5-9 9.5z" />
               </svg>
               {wishlistCount > 0 && (
@@ -173,13 +162,7 @@ export function Navbar() {
               aria-label="Cart"
               onClick={() => setOpen(true)}
             >
-              <svg
-                viewBox="0 0 24 24"
-                className="w-4.25 h-4.25"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.4"
-              >
+              <svg viewBox="0 0 24 24" className="w-4.25 h-4.25" fill="none" stroke="currentColor" strokeWidth="1.4">
                 <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
                 <line x1="3" y1="6" x2="21" y2="6" />
                 <path d="M16 10a4 4 0 0 1-8 0" />
@@ -196,6 +179,7 @@ export function Navbar() {
 
       <CartDrawer open={open} onClose={() => setOpen(false)} />
       <WishlistDrawer />
+      <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
   );
 }

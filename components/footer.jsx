@@ -14,7 +14,7 @@ export function Footer() {
       />
 
       <div
-        className="text-center px-[clamp(20px,4vw,60px)] mb-10 overflow-hidden whitespace-nowrap font-serif text-[clamp(80px,15vw,240px)] tracking-[0.03em] leading-none font-normal"
+        className="text-center px-[clamp(20px,4vw,60px)] mb-10 overflow-hidden whitespace-nowrap font-serif text-[clamp(42px,8vw,120px)] tracking-[0.03em] leading-none font-normal"
         style={{ color: "transparent", WebkitTextStroke: "1px var(--gold)" }}
       >
         MAISON{" "}
