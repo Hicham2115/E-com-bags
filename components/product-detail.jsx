@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { swatchBg } from "@/lib/products";
 import { queryKeys, productFetcher, productsFetcher } from "@/lib/queries";
 
@@ -86,7 +87,34 @@ export function ProductDetail({ handle }) {
   const [helpfuls, setHelpfuls] = useState(new Set([0]));
   const [activeFilter, setActiveFilter] = useState(0);
 
-  if (!product) return null;
+  if (!product) return (
+    <>
+      <Navbar />
+      <div style={{ maxWidth: "1440px", margin: "0 auto", padding: "120px clamp(20px,4vw,60px) 0" }}>
+        <div className="grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-10 md:gap-20 py-10 pb-20 md:pb-30">
+          <div className="grid gap-3 md:gap-5" style={{ gridTemplateColumns: "72px 1fr", alignItems: "start" }}>
+            <div className="flex flex-col gap-2.5">
+              {Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="w-20 h-25 rounded-sm" />)}
+            </div>
+            <Skeleton className="w-full rounded-sm" style={{ aspectRatio: "4/5" }} />
+          </div>
+          <div className="flex flex-col gap-5 md:sticky md:top-25 md:self-start">
+            <Skeleton className="h-4 w-32" />
+            <Skeleton className="h-14 w-3/4" />
+            <Skeleton className="h-4 w-40" />
+            <Skeleton className="h-10 w-36" />
+            <Skeleton className="h-20 w-full" />
+            <div className="flex gap-2.5 mt-2">
+              {Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="w-9 h-9 rounded-full" />)}
+            </div>
+            <Skeleton className="h-14 w-full rounded-full mt-4" />
+            <Skeleton className="h-14 w-full rounded-full" />
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </>
+  );
 
   const thumbImages = product.images.length > 0
     ? [product.images[0], product.images[1] ?? product.images[0], product.images[2] ?? product.images[0], product.images[3] ?? product.images[0]]

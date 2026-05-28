@@ -10,12 +10,17 @@ import { toast } from "sonner";
 import { queryKeys, productsFetcher } from "@/lib/queries";
 
 function useProducts() {
-  return useQuery({
+  const query = useQuery({
     queryKey: queryKeys.products,
     queryFn: productsFetcher,
     staleTime: 5 * 60_000,
-    onError: () => toast.error("Failed to load products. Please try again."),
   });
+
+  useEffect(() => {
+    if (query.isError) toast.error("Failed to load products. Please try again.");
+  }, [query.isError]);
+
+  return query;
 }
 
 export function SearchModal({ open, onClose }) {
