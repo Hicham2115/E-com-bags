@@ -1,11 +1,13 @@
 "use client";
 
 import { useRef } from "react";
-
+import { useQuery } from "@tanstack/react-query";
 import { ProductCard } from "@/components/product-card";
 import { useReveal } from "@/hooks/use-reveal";
+import { queryKeys, productsFetcher } from "@/lib/queries";
 
-export function Bestsellers({ products }) {
+export function Bestsellers() {
+  const { data: products = [] } = useQuery({ queryKey: queryKeys.products, queryFn: productsFetcher });
   const carouselRef = useRef(null);
   const { ref, visible } = useReveal();
 

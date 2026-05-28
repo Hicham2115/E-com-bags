@@ -1,21 +1,29 @@
 import { notFound } from "next/navigation";
+import { QueryClient, dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getProduct, getProducts } from "@/lib/shopify";
+import { queryKeys } from "@/lib/queries";
 import { ProductDetail } from "@/components/product-detail";
 
 export default async function ProductPage({ params }) {
   const { id } = await params;
-  const [product, all] = await Promise.all([getProduct(id), getProducts()]);
+
+  const queryClient = new QueryClient();
+  const [product] = await Promise.all([
+    queryClient.fetchQuery({
+      queryKey: queryKeys.product(id),
+      queryFn: () => getProduct(id),
+    }),
+    queryClient.prefetchQuery({
+      queryKey: queryKeys.products,
+      queryFn: getProducts,
+    }),
+  ]);
 
   if (!product) notFound();
 
-  const suggested = all
-    .filter((p) => p.handle !== product.handle && p.cat === product.cat)
-    .slice(0, 4)
-    .concat(
-      all
-        .filter((p) => p.handle !== product.handle && p.cat !== product.cat)
-        .slice(0, Math.max(0, 4 - all.filter((p) => p.handle !== product.handle && p.cat === product.cat).length))
-    );
-
-  return <ProductDetail product={product} suggested={suggested} />;
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <ProductDetail handle={id} />
+    </HydrationBoundary>
+  );
 }

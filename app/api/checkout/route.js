@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import axios from "axios";
 
 const DOMAIN = process.env.SHOPIFY_STORE_DOMAIN;
 const TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN;
@@ -26,16 +27,17 @@ export async function POST(req) {
     return NextResponse.json({ error: "No valid items" }, { status: 400 });
   }
 
-  const res = await fetch(`https://${DOMAIN}/api/2024-01/graphql.json`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Shopify-Storefront-Access-Token": TOKEN,
+  const { data: json } = await axios.post(
+    `https://${DOMAIN}/api/2024-01/graphql.json`,
+    { query: CREATE_CART, variables: { lines } },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "X-Shopify-Storefront-Access-Token": TOKEN,
+      },
     },
-    body: JSON.stringify({ query: CREATE_CART, variables: { lines } }),
-  });
+  );
 
-  const json = await res.json();
   const checkoutUrl = json.data?.cartCreate?.cart?.checkoutUrl;
 
   if (!checkoutUrl) {

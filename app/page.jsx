@@ -1,3 +1,4 @@
+import { QueryClient, dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { Hero } from "@/components/home/hero";
@@ -9,15 +10,20 @@ import { SocialProof } from "@/components/home/social-proof";
 import { UGCGrid } from "@/components/home/ugc-grid";
 import { PromoSection } from "@/components/home/promo-section";
 import { getProducts } from "@/lib/shopify";
+import { queryKeys } from "@/lib/queries";
 
 export default async function HomePage() {
-  const products = await getProducts();
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({
+    queryKey: queryKeys.products,
+    queryFn: getProducts,
+  });
 
   return (
-    <>
+    <HydrationBoundary state={dehydrate(queryClient)}>
       <Navbar />
       <main>
-        <Hero />{" "}
+        <Hero />
         <section id="collections">
           <Collections />
         </section>
@@ -25,17 +31,10 @@ export default async function HomePage() {
           <BrandStory />
         </section>
         <section id="collections">
-          <Bestsellers products={products.slice(0, 6)} />
+          <Bestsellers />
         </section>
         <Marquee />
-        <div
-          style={{
-            height: "1px",
-            background:
-              "linear-gradient(90deg, transparent, var(--gold), transparent)",
-            margin: "0 clamp(20px,4vw,60px)",
-          }}
-        />
+        <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, var(--gold), transparent)", margin: "0 clamp(20px,4vw,60px)" }} />
         <section id="social-proof">
           <SocialProof />
         </section>
@@ -45,6 +44,6 @@ export default async function HomePage() {
         <PromoSection />
       </main>
       <Footer />
-    </>
+    </HydrationBoundary>
   );
 }

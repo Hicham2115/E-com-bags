@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import Image from "next/image";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -10,12 +11,7 @@ import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 
 async function createCheckout(items) {
-  const res = await fetch("/api/checkout", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ items }),
-  });
-  const data = await res.json();
+  const { data } = await axios.post("/api/checkout", { items });
   if (!data.checkoutUrl) throw new Error(data.error ?? "No checkout URL");
   return data.checkoutUrl;
 }

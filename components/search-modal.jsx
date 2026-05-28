@@ -6,12 +6,15 @@ import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BagSVG } from "./bag-svg";
+import { toast } from "sonner";
+import { queryKeys, productsFetcher } from "@/lib/queries";
 
 function useProducts() {
   return useQuery({
-    queryKey: ["products"],
-    queryFn: () => fetch("/api/products").then((r) => r.json()),
+    queryKey: queryKeys.products,
+    queryFn: productsFetcher,
     staleTime: 5 * 60_000,
+    onError: () => toast.error("Failed to load products. Please try again."),
   });
 }
 

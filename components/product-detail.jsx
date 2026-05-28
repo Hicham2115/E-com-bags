@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { ProductCard } from "@/components/product-card";
@@ -14,6 +15,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { swatchBg } from "@/lib/products";
+import { queryKeys, productFetcher, productsFetcher } from "@/lib/queries";
 
 const reviews = [
   {
@@ -69,16 +71,22 @@ function ProductImage({ src, color, alt = false }) {
   return <BagSVG color={color} alt={alt} />;
 }
 
-export function ProductDetail({ product, suggested }) {
+export function ProductDetail({ handle }) {
+  const { data: product } = useQuery({ queryKey: queryKeys.product(handle), queryFn: () => productFetcher(handle) });
+  const { data: allProducts = [] } = useQuery({ queryKey: queryKeys.products, queryFn: productsFetcher });
+  const suggested = allProducts.filter((p) => p.handle !== handle).slice(0, 4);
+
   const { addItem } = useCart();
   const { toggle, isLiked } = useWishlist();
-  const wished = isLiked(product.id);
+  const wished = isLiked(product?.id);
 
-  const [selectedColor, setSelectedColor] = useState(product.primary);
+  const [selectedColor, setSelectedColor] = useState(product?.primary ?? "");
   const [activeThumb, setActiveThumb] = useState(0);
   const [qty, setQty] = useState(1);
   const [helpfuls, setHelpfuls] = useState(new Set([0]));
   const [activeFilter, setActiveFilter] = useState(0);
+
+  if (!product) return null;
 
   const thumbImages = product.images.length > 0
     ? [product.images[0], product.images[1] ?? product.images[0], product.images[2] ?? product.images[0], product.images[3] ?? product.images[0]]

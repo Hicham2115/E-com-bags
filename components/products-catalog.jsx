@@ -2,10 +2,12 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { ProductCard } from "@/components/product-card";
 import { swatchBg } from "@/lib/products";
+import { queryKeys, productsFetcher } from "@/lib/queries";
 
 const ALL_COLORS = [
   { color: "camel", label: "Camel" },
@@ -25,7 +27,9 @@ const SORTS = [
   "Price · High → Low",
 ];
 
-export function ProductsCatalog({ products }) {
+export function ProductsCatalog() {
+  const { data: products = [] } = useQuery({ queryKey: queryKeys.products, queryFn: productsFetcher });
+
   const allPrices = products.map((p) => p.price);
   const globalMin = products.length ? Math.floor(Math.min(...allPrices)) : 0;
   const globalMax = products.length ? Math.ceil(Math.max(...allPrices)) : 10000;
