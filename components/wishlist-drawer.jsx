@@ -59,7 +59,7 @@ export function WishlistDrawer() {
                       <span className="text-[11px] tracking-[0.18em] uppercase text-[var(--oria-muted)]">{item.primary}</span>
                     </div>
                     <div style={{ fontFamily: "var(--serif)", fontSize: "16px", color: "var(--gold-deep)" }}>
-                      € {item.price?.toLocaleString()}
+                      {item.price?.toLocaleString()} MAD
                     </div>
                   </div>
                   <button

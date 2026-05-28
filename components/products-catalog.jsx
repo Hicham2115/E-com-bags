@@ -309,8 +309,8 @@ export function ProductsCatalog({ products }) {
               className="flex justify-between mt-3 text-[12px]"
               style={{ color: "var(--oria-muted)" }}
             >
-              <span>€ {priceMin.toLocaleString()}</span>
-              <span>€ {priceMax.toLocaleString()}</span>
+              <span>{priceMin.toLocaleString()} MAD</span>
+              <span>{priceMax.toLocaleString()} MAD</span>
             </div>
           </div>
 
@@ -334,8 +334,8 @@ export function ProductsCatalog({ products }) {
 
         <div>
           <div className="grid grid-cols-3 gap-x-7 gap-y-10">
-            {filtered.map((p, i) => (
-              <ProductCard key={p.id} product={p} offsetY={i % 3 === 1} />
+            {filtered.map((p) => (
+              <ProductCard key={p.id} product={p} />
             ))}
           </div>
           {filtered.length === 0 && (

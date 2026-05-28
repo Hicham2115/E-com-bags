@@ -94,8 +94,8 @@ export function ProductCard({ product: p, offsetY = false }) {
         </h3>
         <div className="flex justify-between items-center gap-3">
           <div className="text-sm font-medium tracking-[0.04em]" style={{ color: "var(--gold-deep)" }}>
-            {p.was && <s className="mr-2 text-[var(--oria-muted)] font-normal">€ {p.was.toLocaleString()}</s>}
-            € {p.price.toLocaleString()}
+            {p.was && <s className="mr-2 text-[var(--oria-muted)] font-normal">{p.was.toLocaleString()} MAD</s>}
+            {p.price.toLocaleString()} MAD
           </div>
         </div>
         <div className="flex gap-1.5 mt-2">

@@ -7,18 +7,22 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "./cart-context";
 import { BagSVG } from "./bag-svg";
 import { swatchBg } from "@/lib/products";
-import { createCheckout } from "@/lib/shopify";
-
 export function CartDrawer({ open, onClose }) {
   const { items, removeItem, changeQty, subtotal } = useCart();
   const [loading, setLoading] = useState(false);
 
   async function handleCheckout() {
     setLoading(true);
-    const url = await createCheckout(items);
-    setLoading(false);
-    if (url) {
-      window.location.href = url;
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items }),
+      });
+      const { checkoutUrl } = await res.json();
+      if (checkoutUrl) window.location.href = checkoutUrl;
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -75,7 +79,7 @@ export function CartDrawer({ open, onClose }) {
                 </div>
                 <div className="flex flex-col items-end">
                   <div style={{ fontFamily: "var(--serif)", fontSize: "18px", color: "var(--gold-deep)" }}>
-                    € {(item.price * item.qty).toLocaleString()}
+                    {(item.price * item.qty).toLocaleString()} MAD
                   </div>
                   <button
                     className="mt-2 text-[10px] tracking-[0.2em] uppercase text-[var(--oria-muted)] hover:text-[var(--oria-text)] transition-colors"
@@ -93,11 +97,11 @@ export function CartDrawer({ open, onClose }) {
           <div className="flex justify-between mb-2 text-sm">
             <span>Subtotal</span>
             <strong style={{ fontFamily: "var(--serif)", fontSize: "22px", color: "var(--gold-deep)", fontWeight: 500 }}>
-              € {subtotal.toLocaleString()}
+              {subtotal.toLocaleString()} MAD
             </strong>
           </div>
           <div className="text-[11px] text-[var(--oria-muted)] tracking-[0.18em] uppercase mb-5">
-            Shipping & taxes calculated at checkout · Free worldwide over €500
+            Shipping & taxes calculated at checkout · Free worldwide over 5,000 MAD
           </div>
           <Button
             onClick={handleCheckout}

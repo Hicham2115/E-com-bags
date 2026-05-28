@@ -8,6 +8,7 @@ import { Footer } from "@/components/footer";
 import { ProductCard } from "@/components/product-card";
 import { BagSVG } from "@/components/bag-svg";
 import { useCart } from "@/components/cart-context";
+import { useWishlist } from "@/store/wishlist";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -69,6 +70,8 @@ function ProductImage({ src, color, alt = false }) {
 
 export function ProductDetail({ product, suggested }) {
   const { addItem } = useCart();
+  const { toggle, isLiked } = useWishlist();
+  const wished = isLiked(product.id);
 
   const [selectedColor, setSelectedColor] = useState(product.primary);
   const [activeThumb, setActiveThumb] = useState(0);
@@ -156,8 +159,8 @@ export function ProductDetail({ product, suggested }) {
 
             <div className="flex items-baseline gap-3.5 mb-6">
               <div style={{ fontFamily: "var(--serif)", fontSize: "32px", color: "var(--gold-deep)", fontWeight: 500 }}>
-                {product.was && <s className="text-xl mr-1.5 font-normal" style={{ color: "var(--oria-muted)" }}>€ {product.was.toLocaleString()}</s>}
-                € {product.price.toLocaleString()}
+                {product.was && <s className="text-xl mr-1.5 font-normal" style={{ color: "var(--oria-muted)" }}>{product.was.toLocaleString()} MAD</s>}
+                {product.price.toLocaleString()} MAD
               </div>
               {product.was && (
                 <Badge className="text-[11px] tracking-[0.22em] uppercase border-0 bg-transparent text-red-700 font-medium p-0">
@@ -222,13 +225,15 @@ export function ProductDetail({ product, suggested }) {
                 className="w-full justify-center py-5 text-[12px] tracking-[0.22em] uppercase font-medium rounded-full bg-[var(--oria-text)] text-[var(--text-light)] hover:bg-[var(--gold)] hover:text-[var(--oria-text)] transition-all duration-500 border-0"
                 onClick={() => addItem(product, qty, selectedColor)}
               >
-                Add to Bag — € {(product.price * qty).toLocaleString()} →
+                Add to Bag — {(product.price * qty).toLocaleString()} MAD →
               </Button>
               <Button
                 variant="outline"
                 className="w-full justify-center py-5 text-[12px] tracking-[0.22em] uppercase font-medium rounded-full border-[var(--oria-text)] hover:bg-[var(--oria-text)] hover:text-[var(--text-light)] transition-all duration-500"
+                onClick={() => toggle(product)}
+                style={wished ? { background: "var(--oria-text)", color: "var(--gold)" } : undefined}
               >
-                Add to Wishlist ♡
+                {wished ? "Saved to Wishlist ♥" : "Add to Wishlist ♡"}
               </Button>
             </div>
 
